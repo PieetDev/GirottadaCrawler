@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+typedef struct {
+    int x, y;
+    char dir;
+    int hp;
+    int arma;
+}player;
+void npc(player *p) {
+    int escolha;
+    printf("Olá aventureiro, seja bem vindo aqui em Girottinho! veio enfrentar a masmorra? ela está ao sul! porém não vá desprotegido... pegue uma dessas armas:\n");
+    printf("1 - Espada\n");
+    printf("2 - Arco\n");
+    printf("3 - cajado\n");
+    scanf("%d", &escolha);
+    switch(escolha) {
+        case 1:
+            p->arma = 1;
+            printf("Voce recebeu uma Espada!\n");
+            break;
+        case 2:
+            p->arma = 2;
+            printf("Voce recebeu um Arco!\n");
+            break;
+        case 3:
+            p->arma = 3;
+            printf("Voce recebeu um Cajado!\n");
+            break;
+    }
+    system("pause");
+}
+int tangivel(char mapa[10][10], int x, int y) {
+    switch(mapa[y][x]) {
+        case '*':
+        case 'N':
+        case 'D':
+        case 'k':
+            return 0;
+
+        default:
+            return 1;
+    }
+}
+void mover(player *p, char tecla) {
+    switch (tecla) {
+        case 'w': p->y--; p->dir = '^'; break;
+        case 's': p->y++; p->dir = 'v'; break;
+        case 'a': p->x--; p->dir = '<'; break;
+        case 'd': p->x++; p->dir = '>'; break;
+    }
+}
+void desenharmapa(char mapa[10][10], player jogador) {
+    for(int y = 0; y < 10; y++) {
+        for(int x = 0; x < 10; x++) {
+
+            if(x == jogador.x && y == jogador.y)
+                printf("%c", jogador.dir);
+            else
+                printf("%c", mapa[y][x]);
+
+        }
+        printf("\n");
+    }
+}
+int main(void) {
+    SetConsoleOutputCP(CP_UTF8);
+    int menu = 0;
+    while (1) {
+        system("cls");
+        printf("GIROTTADA GAMES APRESENTA:\n\nGirottadaCrawler\n\n1 : Jogar\n2: Tutorial\n3 : Sair\n\n");
+        scanf("%d", &menu);
+        switch(menu) {
+            case 1:
+                system("cls");
+                player p = {1, 1, '>', 3, 0};
+                char tecla;
+                while (1) {
+                    system("cls");
+                    char mapa[10][10] = {
+                        "**********",
+                        "*        *",
+                        "*        *",
+                        "*****    *",
+                        "* N =    *",
+                        "*****    *",
+                        "****     *",
+                        "*N D     *",
+                        "****   L *",
+                        "**********"
+                    };
+                    int frenteX = p.x;
+                    int frenteY = p.y;
+                    int novox = p.x;
+                    int novoy = p.y;
+                    switch(p.dir) {
+                        case '^': frenteY--; break;
+                        case 'v': frenteY++; break;
+                        case '<': frenteX--; break;
+                        case '>': frenteX++; break;
+                    }
+                    desenharmapa(mapa, p);
+                    scanf(" %c", &tecla);
+                    if(tecla == 'i') {
+                        if(mapa[frenteY][frenteX] == 'N') {
+                            npc(&p);
+                        }
+                    }
+                    else {
+                        switch(tecla) {
+                            case 'w': novoy--; break;
+                            case 's': novoy++; break;
+                            case 'a': novox--; break;
+                            case 'd': novox++; break;
+                        }
+
+                        if(tangivel(mapa, novox, novoy)) {
+                            mover(&p, tecla);
+                        }
+                    }
+                }
+                break;
+            case 2:
+                system("cls");
+                printf("Há anos que o país está sem rei. O território está um caos, os habitantes precisam de um governador já. Porém uma antiga lenda diz que apenas quem segura o lendário cetro: Girottada, pode governar as grandes terras de Girotto, que está em uma perigosa masmorra ao sul de uma pequena vila: Girottinho. O nosso herói, o personagem que você controla, se dispôs a enfrentar a perigosa masmorra e assumir o papel de rei para o país.\n\n");
+                printf("Símbolos:\n< : Jogador olhando para a esquerda\n^ : Jogador olhando para cima\n> : Jogador olhando para a direita\nv : Jogador olhando para baixo\nN : Npc\n* : Parede: o jogador não pode passar\n# : Espinho: o jogador morre ao passar por cima\nk : Caixa: o jogador não pode passar, mas pode ser destruída com ataque\nO : Botão: executa uma ação ao ser pressionado\nD : Porta fechada: o jogador não pode passar\n@ : Chave: abre uma porta fechada ao interagir\n= : Porta aberta: o jogador pode passar\nL : Escada: leva o jogador para a próxima fase\nX : Monstro Tipo 1\nY : Monstro Tipo 2\nZ : Boss Final\n\n");
+                printf("Controles:\nw : Move o jogador para cima\na : Move o jogador para a esquerda\ns : Move o jogador para baixo\nd : Move o jogador para a direita\ni : Interage com o objeto que está à frente do jogador\no : O jogador realiza um ataque na célula à sua frente\n");
+                system("pause");
+                break;
+            case 3:
+                system("cls");
+                printf("Desenvolvedores:\n\nPietra Reis\nMaria Emanuele\nAndré Barbosa\n");
+                system("pause");
+                exit(0);
+        }
+    }
+}
