@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+int main(void) {
+    SetConsoleOutputCP(CP_UTF8);
+    int menu = 0;
+    char mapa[10][10] = {
+        {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+        {' ',' ','*','*','*','*',' ',' ',' ',' '},
+        {' ',' ','*',' ',' ','*',' ',' ',' ',' '},
+        {' ',' ','*',' ',' ','*',' ',' ',' ',' '},
+        {' ',' ','*',' ',' ','*',' ',' ',' ',' '},
+        {' ',' ','*','=','=','*',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' ',' ',' ',' ',' '}
+    };
+        int i;
+    while (1) {
+        system("cls");
+        printf("GIROTTADA GAMES APRESENTA:\n\nGirottadaCrawler\n\n1 : Jogar\n2: Tutorial\n3 : Sair\n\n");
+        scanf("%d", &menu);
+        switch(menu) {
+            case 1:
+                system("cls");
+                for (i = 0; i < 10; i++) {
+                    printf("%s\n", mapa[i]);
+                    }
+                system("pause");
+                break;
+                case 2:
+                system("cls");
+                printf("Há anos que o país está sem rei. O território está um caos, os habitantes precisam de um governador já. Porém uma antiga lenda diz que apenas quem segura o lendário cetro: Girottada, pode governar as grandes terras de Girotto, que está em uma perigosa masmorra ao sul de uma pequena vila: Girottinho. O nosso herói, o personagem que você controla, se dispôs a enfrentar a perigosa masmorra e assumir o papel de rei para o país.\n\n");
+                printf("Símbolos:\n< : Jogador olhando para a esquerda\n^ : Jogador olhando para cima\n> : Jogador olhando para a direita\nv : Jogador olhando para baixo\n* : Parede: o jogador não pode passar\n# : Espinho: o jogador morre ao passar por cima\nk : Caixa: o jogador não pode passar, mas pode ser destruída com ataque\nO : Botão: executa uma ação ao ser pressionado\nD : Porta fechada: o jogador não pode passar\n@ : Chave: abre uma porta fechada ao interagir\n= : Porta aberta: o jogador pode passar\nL : Escada: leva o jogador para a próxima fase\nX : Monstro Tipo 1\nY : Monstro Tipo 2\nZ : Boss Final\n\n");
+                printf("Controles:\nw : Move o jogador para cima\na : Move o jogador para a esquerda\ns : Move o jogador para baixo\nd : Move o jogador para a direita\ni : Interage com o objeto que está à frente do jogador\no : O jogador realiza um ataque na célula à sua frente\n");
+                system("pause");
+                break;
+                case 3:
+                system("cls");
+                printf("Desenvolvedores:\n\nPietra Reis\nMaria Emanuele\nAndré Barbosa\n");
+                system("pause");
+                exit(0);
+        }
+    }
+    return 0;
+}
